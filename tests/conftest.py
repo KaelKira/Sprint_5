@@ -1,17 +1,11 @@
-from random import randint
 import pytest
 from selenium import webdriver
+from urls import Urls
 
 
 @pytest.fixture
 def driver():
     browser = webdriver.Chrome()
-    browser.get('https://stellarburgers.nomoreparties.site/')
+    browser.get(Urls.MAIN_URL)
     yield browser
     browser.quit()
-
-
-@pytest.fixture
-def new_login():
-    login = 'amatveev_' + str(randint(100,999)) + '@yandex.ru'
-    return login

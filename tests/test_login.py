@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-import time
 from constans import Constants
 from locators import Locators
 
@@ -9,37 +8,35 @@ from locators import Locators
 class TestLogin:
     # вход по кнопке «Войти в аккаунт» на главной
     def test_login_form_main_page_success(self, driver):
-        driver.find_element(By.XPATH, './/button[text() = "Войти в аккаунт"]').click()
+        driver.find_element(*Locators.ENTER_TO_PROFILE_BUTTON).click()
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text() = "Войти"]')))
+            Locators.AUTH_BUTTON))
 
         driver.find_element(*Locators.EMAIL).send_keys(Constants.EMAIL)
         driver.find_element(*Locators.PASSWORD).send_keys(Constants.PASSWORD)
         driver.find_element(*Locators.AUTH_BUTTON).click()
 
-        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text()="Оформить заказ"]')))
+        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(Locators.MAKE_AN_ORDER))
 
-        assert driver.find_element(By.XPATH, './/button[text()="Оформить заказ"]').text == 'Оформить заказ'
+        assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
         driver.quit()
 
 
     #вход через кнопку «Личный кабинет»
     def test_login_form_header_lk_button_success(self, driver):
-        driver.find_element(By.XPATH, './/p[text() = "Личный Кабинет"]').click()
+        driver.find_element(*Locators.PROFILE).click()
 
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text() = "Войти"]')))
+            Locators.AUTH_BUTTON))
 
         driver.find_element(*Locators.EMAIL).send_keys(Constants.EMAIL)
         driver.find_element(*Locators.PASSWORD).send_keys(Constants.PASSWORD)
         driver.find_element(*Locators.AUTH_BUTTON).click()
 
-        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text()="Оформить заказ"]')))
+        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(Locators.MAKE_AN_ORDER))
 
-        assert driver.find_element(By.XPATH, './/button[text()="Оформить заказ"]').text == 'Оформить заказ'
+        assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
         driver.quit()
 
@@ -47,64 +44,66 @@ class TestLogin:
 
     #вход через кнопку в форме восстановления пароля страница forgot-password
     def test_login_reset_password_link_first_page_success(self, driver):
-        driver.find_element(By.XPATH, './/p[text() = "Личный Кабинет"]').click()
+        driver.find_element(*Locators.PROFILE).click()
 
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text() = "Войти"]')))
+            Locators.AUTH_BUTTON))
 
-        driver.find_element(By.XPATH, './/a[text()="Восстановить пароль"]').click()
+        driver.find_element(*Locators.RESER_PASSWORD).click()
 
         WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(
-            (By.XPATH, './/a[text()="Войти"]')))
-        driver.find_element(By.XPATH, './/a[text()="Войти"]').click()
+            Locators.ENTER_LINK))
+
+        driver.find_element(*Locators.ENTER_LINK).click()
 
         WebDriverWait(driver, 10).until(
-            expected_conditions.element_to_be_clickable((By.XPATH, './/button[text() = "Войти"]'))
+            expected_conditions.element_to_be_clickable(Locators.AUTH_BUTTON)
         )
 
         driver.find_element(*Locators.EMAIL).send_keys(Constants.EMAIL)
         driver.find_element(*Locators.PASSWORD).send_keys(Constants.PASSWORD)
         driver.find_element(*Locators.AUTH_BUTTON).click()
 
-        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text()="Оформить заказ"]')))
+        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(Locators.MAKE_AN_ORDER))
 
-        assert driver.find_element(By.XPATH, './/button[text()="Оформить заказ"]').text == 'Оформить заказ'
+        assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
         driver.quit()
 
     #вход через кнопку в форме восстановления пароля страница reset-password
     def test_login_reset_password_link_second_page_success(self, driver):
-        driver.find_element(By.XPATH, './/p[text() = "Личный Кабинет"]').click()
+        driver.find_element(*Locators.PROFILE).click()
 
         #нажимаем восстановить пароль
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/a[text()="Восстановить пароль"]')))
-        driver.find_element(By.XPATH, './/a[text()="Восстановить пароль"]').click()
+            Locators.RESER_PASSWORD))
+        driver.find_element(*Locators.RESER_PASSWORD).click()
 
         # вводим email для восстановления
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text()="Восстановить"]')))
+            Locators.RESER_PASSWORD_BUTTON))
         driver.find_element(By.XPATH, './/input').send_keys(Constants.EMAIL)
-        driver.find_element(By.XPATH, './/button[text()="Восстановить"]').click()
+        driver.find_element(*Locators.RESER_PASSWORD_BUTTON).click()
 
-        #нажимаем войти
-        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(
-            (By.XPATH, './/a[text()="Войти"]')))
-        time.sleep(2)
-        driver.find_element(By.XPATH, './/a[text()="Войти"]').click()
+        #ну как есть
+        WebDriverWait(driver, 10).until(
+            expected_conditions.staleness_of(driver.find_element(*Locators.ENTER_LINK)))
+
+        new_element = WebDriverWait(driver, 10).until(
+            expected_conditions.presence_of_element_located(Locators.ENTER_LINK)  # Найти новый элемент
+        )
+        new_element.click()
 
         #логинимся
         WebDriverWait(driver, 10).until(
-            expected_conditions.element_to_be_clickable((By.XPATH, './/button[text() = "Войти"]'))
+            expected_conditions.element_to_be_clickable(Locators.AUTH_BUTTON)
         )
         driver.find_element(*Locators.EMAIL).send_keys(Constants.EMAIL)
         driver.find_element(*Locators.PASSWORD).send_keys(Constants.PASSWORD)
         driver.find_element(*Locators.AUTH_BUTTON).click()
 
-        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
-            (By.XPATH, './/button[text()="Оформить заказ"]')))
+        WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(Locators.MAKE_AN_ORDER))
 
-        assert driver.find_element(By.XPATH, './/button[text()="Оформить заказ"]').text == 'Оформить заказ'
+        assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
         driver.quit()
