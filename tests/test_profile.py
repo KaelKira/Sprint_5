@@ -23,5 +23,3 @@ class TestProfile:
             Locators.FOR_EMAIL))
 
         assert driver.find_element(*Locators.FOR_EMAIL).get_dom_attribute('value') == Constants.EMAIL
-
-        driver.quit()

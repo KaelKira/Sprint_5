@@ -4,7 +4,6 @@ from constans import Constants
 from locators import Locators
 
 
-
 #переход по клику на «Конструктор»
 class TestLinks:
     def test_link_constructor_success(self, driver):
@@ -28,7 +27,6 @@ class TestLinks:
 
         assert driver.find_element(*Locators.HEADER).text == 'Соберите бургер'
 
-        driver.quit()
 
     #переход по клику на логотип Stellar Burgers
     def test_link_logo_success(self, driver):
@@ -54,7 +52,6 @@ class TestLinks:
 
         assert driver.find_element(*Locators.HEADER).text == 'Соберите бургер'
 
-        driver.quit()
 
     # переход по клику Лента Заказов
     def test_link_orders_list_success(self, driver):
@@ -79,4 +76,3 @@ class TestLinks:
 
         assert driver.find_element(*Locators.ORDER_LIST_HEADER).text == 'Лента заказов'
 
-        driver.quit()

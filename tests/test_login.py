@@ -20,7 +20,6 @@ class TestLogin:
 
         assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
-        driver.quit()
 
 
     #вход через кнопку «Личный кабинет»
@@ -38,7 +37,6 @@ class TestLogin:
 
         assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
-        driver.quit()
 
     #вход через кнопку в форме регистрации - см тест test_registration_valid_data_success
 
@@ -68,7 +66,6 @@ class TestLogin:
 
         assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
-        driver.quit()
 
     #вход через кнопку в форме восстановления пароля страница reset-password
     def test_login_reset_password_link_second_page_success(self, driver):
@@ -82,7 +79,7 @@ class TestLogin:
         # вводим email для восстановления
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(
             Locators.RESER_PASSWORD_BUTTON))
-        driver.find_element(By.XPATH, './/input').send_keys(Constants.EMAIL)
+        driver.find_element(*Locators.EMAIL_FOR_RESTORE).send_keys(Constants.EMAIL)
         driver.find_element(*Locators.RESER_PASSWORD_BUTTON).click()
 
         #ну как есть
@@ -105,5 +102,3 @@ class TestLogin:
         WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(Locators.MAKE_AN_ORDER))
 
         assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
-
-        driver.quit()

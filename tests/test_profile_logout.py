@@ -24,5 +24,3 @@ class TestProfileLogout:
         WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable(
             Locators.AUTH_BUTTON))
         assert driver.find_element(*Locators.AUTH_BUTTON).text == 'Войти'
-
-        driver.quit()

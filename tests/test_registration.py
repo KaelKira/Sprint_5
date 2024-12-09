@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import Locators
@@ -30,7 +29,6 @@ class TestRegistration:
 
         assert driver.find_element(*Locators.MAKE_AN_ORDER).text == 'Оформить заказ'
 
-        driver.quit()
 
     def test_registration_double_registration_error(self, driver):
         login = new_login()
@@ -55,11 +53,9 @@ class TestRegistration:
         driver.find_element(*Locators.REGESTRATION_PASSWORD).send_keys('123456')
         driver.find_element(*Locators.REGESTRATION_BUTTON).click()
 
-        WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((
-            By.XPATH, './/p[text()="Такой пользователь уже существует"]')))
-        assert driver.find_element(By.XPATH, './/p[text()="Такой пользователь уже существует"]').text == 'Такой пользователь уже существует'
+        WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable(Locators.EXISTED_USER))
+        assert driver.find_element(*Locators.EXISTED_USER).text == 'Такой пользователь уже существует'
 
-        driver.quit()
 
     def test_registration_password_less_then_6_simbl_error(self, driver):
         login = new_login()
@@ -74,8 +70,6 @@ class TestRegistration:
         driver.find_element(*Locators.REGESTRATION_PASSWORD).send_keys('12345')
         driver.find_element(*Locators.REGESTRATION_BUTTON).click()
 
-        assert driver.find_element(By.XPATH, './/p[text()="Некорректный пароль"]').text == 'Некорректный пароль'
-
-        driver.quit()
+        assert driver.find_element(*Locators.WRONG_PASSWORD).text == 'Некорректный пароль'
 
 

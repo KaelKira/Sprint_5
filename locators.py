@@ -24,3 +24,6 @@ class Locators:
     REGESTRATION_PASSWORD = (By.XPATH, './/label[text()="Пароль"]/parent::div/input')
     REGESTRATION_BUTTON = (By.XPATH, './/button[text()="Зарегистрироваться"]')
     REGESTRATION_LINK = (By.XPATH, './/a[text()="Зарегистрироваться"]')
+    EXISTED_USER = (By.XPATH, './/p[text()="Такой пользователь уже существует"]')
+    WRONG_PASSWORD = (By.XPATH, './/p[text()="Некорректный пароль"]')
+    EMAIL_FOR_RESTORE = (By.XPATH, './/input')
